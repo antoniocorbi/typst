@@ -48,6 +48,12 @@ everything
     caption: [Application window],
 )
 
+Total displaced soil by glacial flow:
+
+$ 7.32 beta +
+  sum_(i=0)^nabla
+        (Q_i (a_i - epsilon)) / 2 $
+
 Performance through Incrementality: All Typst language features must
 accommodate for incremental compilation. Luckily we have comemo, a
 system for incremental compilation which does most of the hard work in
