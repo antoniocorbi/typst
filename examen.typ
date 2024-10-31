@@ -20,13 +20,19 @@ $ R = mat(delim: "(", sqrt(2) / 2, - sqrt(2) / 2, 0; sqrt(2) / 2, sqrt(2) / 2, 0
 == Ejercicio 3
 <ejercicio-3>
 Consideremos la matriz:
-$ R = mat(delim: "(", alpha, alpha - 2, alpha - 6; 1, 1, 3; 2 + alpha, alpha, alpha) . $
+$ R = mat(delim: "(",
+ alpha, alpha - 2, alpha - 6;
+ 1, 1, 3;
+ 2 + alpha, alpha, alpha) . $
+
 ¿Para qué valores de $alpha$ la matriz no es invertible?
 
 == Ejercicio 4
 <ejercicio-4>
 Analiza el sistema de ecuaciones lineales que se indica a continuación
 según los valores de los parámetros $a$ y $b$ (ambos pertenecientes a
-$bb(R)$). Resuélvelo cuando sea posible: $ x - b y + a z = 1\
-a x + b y + z = 0\
-a x - y + z = a $
+$bb(R)$). Resuélvelo cuando sea posible:
+
+$  x - b y + a z = 1\
+ a x + b y +   z = 0\
+ a x -   y +   z = a $
