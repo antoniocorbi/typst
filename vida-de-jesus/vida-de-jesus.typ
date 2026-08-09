@@ -1,93 +1,94 @@
-The Project Gutenberg eBook of Vida de Jesús
-    
-This eBook is for the use of anyone anywhere in the United States and
-most other parts of the world at no cost and with almost no
-restrictions whatsoever. You may copy it, give it away or re-use it
-under the terms of the Project Gutenberg License included with this
-eBook or online at www.gutenberg.org. If you are not located in the
-United States, you will have to check the laws of the country where
-you are located before using this eBook.
+// 1. Configuración general del documento (Formato estilo libro)
+#set page(
+  paper: "a4",
+  margin: (x: 2.5cm, top: 3cm, bottom: 2.5cm),
+  // Encabezado y pie de página dinámicos
+  header: context {
+    let page-num = counter(page).get().first()
+    // No mostrar encabezado en la portada (página 1)
+    if page-num > 1 [
+      #text(9pt, fill: luma(120), style: "italic")[Mi Libro en Typst]
+      #h(1fr)
+      #text(9pt, fill: luma(120))[Capítulo]
+    ]
+  },
+  footer: context {
+    let page-num = counter(page).get().first()
+    if page-num > 1 [
+      #align(center)[#page-num]
+    ]
+  }
+)
 
-Title: Vida de Jesús
+// Configuración de texto y párrafos
+#set text(font: "Linux Libertine", size: 11pt, lang: "es")
+#set par(justify: true, leading: 0.7em, first-line-indent: 1.5em)
+#set heading(numbering: "1.1")
 
-Author: Ernest Renan
+// 2. Regla para que los Títulos de Nivel 1 (Capítulos) actúen como en LaTeX
+#show heading.where(level: 1): it => {
+  // Forzar que cada capítulo empiece en página nueva
+  pagebreak(weak: true)
 
-Translator: Federico de la Vega
+  v(3cm) // Espacio superior antes del título del capítulo
+  align(left)[
+    #text(12pt, weight: "regular", fill: luma(100))[
+      // Obtener y mostrar el número del capítulo
+      = CAPÍTULO #counter(heading).display()
+    ]
+    #v(0.5em)
+    #text(24pt, weight: "bold")[#it.body]
+  ]
+  v(2cm) // Espacio antes del primer párrafo
+}
 
+// ==========================================
+// PORTADA (Portada limpia estilo libro)
+// ==========================================
 
-        
-Release date: April 26, 2021 [eBook #65165] Most recently updated:
-                October 18, 2024
+#align(center + horizon)[
+  #text(32pt, weight: "bold")[VIDA DE JESÚS]
 
-Language: Spanish
+  #v(1cm)
+  #text(16pt, style: "italic")[HISTORIA DE LOS ORÍGENES DEL CRISTIANISMO \ LIBRO
+  PRIMERO]
 
-Other information and formats: www.gutenberg.org/ebooks/65165
+  #v(4cm)
+  #text(14pt)[Ernesto Renán]
 
-Credits: Ramón Pajares Box and the Online Distributed Proofreading
-Team at https://www.pgdp.net (This book was produced from scanned
-images of public domain material from the Google Books project.)
+  #v(1em)
+  #text(10pt, fill: luma(100))[MADRID\ LIBRERÍA DE ALFONSO DURÁN\ CARRERA DE S. GERÓNIMO, 2\ 1869]
+]
 
+// Salto de página tras la portada
+#pagebreak()
 
-*** START OF THE PROJECT GUTENBERG EBOOK VIDA DE JESÚS ***
+// Reiniciar el contador de páginas para el contenido principal
+#counter(page).update(1)
 
-NOTA DE TRANSCRIPCIÓN
+// ==========================================
+// ÍNDICE (Tabla de contenidos)
+// ==========================================
 
-  * Las cursivas se muestran entre _subrayados_, y las versalitas se
-    han convertido a MAYÚSCULAS.
+#outline(title: [Índice General], indent: 1.5em)
 
-  * Los errores de imprenta han sido corregidos.
+// ==========================================
+// CONTENIDO DEL LIBRO
+// ==========================================
 
-  * La ortografía del original ha sido respetada, normalizándose las
-    variantes a la grafía más frecuente.
-
-  * Se han añadido tildes a las mayúsculas que las necesitan.
-
-  * El texto de las notas, citas y referencias se ha hecho coincidir
-    con el del original francés de la 12.ª edición. (Las ediciones
-    francesas, a partir de la 13.ª, tienen adiciones que no están
-    reflejadas en esta traducción.)
-
-  * Las notas a pie de página procedentes del autor han sido
-    renumeradas y quedan colocadas al final del libro, como en el
-    original impreso. Las procedentes del editor o del traductor se
-    han colocado debajo del párrafo que contiene la llamada.
-
-  * Las páginas en blanco han sido eliminadas.
-
-
-
-
-  VIDA DE JESÚS -- HISTORIA DE LOS ORÍGENES DEL CRISTIANISMO -- LIBRO
-  PRIMERO
-
-
-
-
-  ERNESTO RENÁN
-
-  ——
-
-  VIDA DE JESÚS
-
-  NUEVA EDICION CON NOTAS
-
-  ——
-
-  MADRID LIBRERÍA DE ALFONSO DURÁN CARRERA DE S. GERÓNIMO, 2 -- 1869
+//   MADRID LIBRERÍA DE ALFONSO DURÁN CARRERA DE S. GERÓNIMO, 2 -- 1869
+//
+//
+//
+//
+// MADRID, 1869.--Imp. de Rivadeneyra, Duque de Osuna, 3.
 
 
 
+= Prólogo
 
-MADRID, 1869.--Imp. de Rivadeneyra, Duque de Osuna, 3.
-
-
-
-
-AL ALMA PURA
-
-DE MI HERMANA ENRIQUETA
-
-MUERTA EN BIBLOS EL 24 DE SETIEMBRE DE 1861
+_AL ALMA PURA DE MI HERMANA ENRIQUETA MUERTA EN BIBLOS EL 24 DE
+SETIEMBRE DE 1861_
 
 
 ¿Te acuerdas, desde el seno de Dios, donde reposas, de aquellos largos
@@ -114,7 +115,7 @@ hacen amar.
 
 
 
-INTRODUCCION
+= INTRODUCCION
 
 EN DONDE PRINCIPALMENTE SE TRATA DE LAS FUENTES DE ESTA HISTORIA
 
@@ -180,7 +181,7 @@ El plan que he adoptado en esta historia me ha impedido introducir en
 el texto largas disertaciones críticas sobre los puntos
 controvertidos. Un sistema contínuo de notas permite al lector
 comprobar por sí mismo en las fuentes que se citan, las proposiciones
-de la obra[*]. En esas notas me he limitado estrictamente á las citas
+de la obra _NPIE_ . En esas notas me he limitado estrictamente á las citas
 de primera mano, esto es, á la indicacion de los pasajes originales,
 sobre los cuales se apoya cada aserto ó cada conjetura. Comprendo que
 para las personas poco iniciadas en esta clase de estudios, serían
@@ -189,7 +190,7 @@ costumbre de retocar lo que está hecho y bien hecho. Para no citar
 sino libros escritos en frances, aquellos que deseen profundizar la
 materia pueden proporcionarse las obras siguientes:
 
-  [*] Para no fatigar la atencion del lector con repetidas llamadas
+   _NPIE_  Para no fatigar la atencion del lector con repetidas llamadas
   bajo el texto, hemos creido oportuno trasladar las notas al fin del
   volúmen.
 
@@ -1210,12 +1211,7 @@ en su pecho un corazon de hombre. No se le glorifica excluyéndole de
 la historia; ríndesele un culto más verdadero demostrando que sin él
 la historia entera sería incomprensible.
 
-
-
-
-  VIDA DE JESÚS
-
-CAPÍTULO PRIMERO
+= CAPÍTULO PRIMERO
 
 RANGO DE JESÚS EN LA HISTORIA DEL MUNDO
 
@@ -1576,7 +1572,7 @@ probablemente compararse ningun otro.
 
 
 
-CAPÍTULO II
+= CAPÍTULO II
 
 INFANCIA Y JUVENTUD DE JESÚS -- SUS PRIMERAS IMPRESIONES
 
@@ -1735,7 +1731,7 @@ de infinitos desfallecimientos y no obstante la vanidad universal.
 
 
 
-CAPÍTULO III
+= CAPÍTULO III
 
 EDUCACION DE JESÚS
 
@@ -1903,7 +1899,7 @@ trasportada allí pieza á pieza como una máquina ya concluida que debia
 montarse en lugar determinado. Aquella arquitectura de ostentacion
 llevada á Judea por cargamentos, aquellos centenares de columnas,
 todas del mismo diámetro, ornato de alguna insípida «calle de
-Rivoli[*]», hé ahí lo que Jesús llamaba «los reinos del mundo y todas
+Rivoli _NPIE_ », hé ahí lo que Jesús llamaba «los reinos del mundo y todas
 sus glorias.» Pero aquel lujo de encargo y aquel arte administrativo y
 oficial le causaban repugnancia. Sus aldeas galileas, mezcla confusa
 de cabañas, de eras y de prensas talladas en la roca, de pozos, de
@@ -1916,7 +1912,7 @@ poderosos[121] prueban que no concibió nunca la sociedad aristocrática
 sino como un jóven aldeano que ve el mundo por el prisma de su
 candidez.
 
-  [*] Una de las más rectas, largas y uniformes que tiene París.
+   _NPIE_  Una de las más rectas, largas y uniformes que tiene París.
 
 Ménos aún conoció la idea nueva creada por la ciencia griega, esa idea
 que sirve de base á toda filosofía, que la ciencia moderna ha
@@ -1983,7 +1979,7 @@ como la forma absoluta del bien y de la verdad.
 
 
 
-CAPÍTULO IV
+= CAPÍTULO IV
 
 ÓRDEN DE IDEAS EN CUYO SENO CRECIÓ JESÚS
 
@@ -2468,7 +2464,7 @@ de los ángeles en el corazon.
 
 
 
-CAPÍTULO V
+= CAPÍTULO V
 
   PRIMEROS AFORISMOS DE JESÚS -- SUS IDEAS DE UN DIOS PADRE Y DE UNA
   RELIGION PURA -- PRIMEROS DISCÍPULOS
@@ -2875,7 +2871,7 @@ permanece entera y será renovada constantemente.
 
 
 
-CAPÍTULO VI
+= CAPÍTULO VI
 
 JUAN BAUTISTA -- VIAJE DE JESÚS HÁCIA JUAN Y SU PERMANENCIA EN EL
 DESIERTO DE JUDEA -- ADOPTA EL BAUTISMO DE JUAN
@@ -3190,7 +3186,7 @@ favorables al cumplimiento de las esperanzas que alimentaba.
 
 
 
-CAPÍTULO VII
+= CAPÍTULO VII
 
 DESARROLLO DE LAS IDEAS DE JESÚS SOBRE EL REINO DE DIOS
 
@@ -3508,7 +3504,7 @@ justificacion[335].
 
 
 
-CAPÍTULO VIII
+= CAPÍTULO VIII
 
 JESÚS EN CAPHARNAHUM
 
@@ -3809,7 +3805,7 @@ sus pensamientos; allí encontraba fe y amor.
 
 
 
-CAPÍTULO IX
+= CAPÍTULO IX
 
 LOS DISCÍPULOS DE JESÚS
 
@@ -4068,7 +4064,7 @@ establecer un comercio sobrenatural entre el cielo y él[430].
 
 
 
-CAPÍTULO X
+= CAPÍTULO X
 
 PREDICACION DEL LAGO
 
@@ -4344,7 +4340,7 @@ completamente el campo de Dios.
 
 
 
-CAPÍTULO XI
+= CAPÍTULO XI
 
 EL REINO DE DIOS CONCEBIDO COMO EL ADVENIMIENTO DE LOS POBRES
 
@@ -4652,7 +4648,7 @@ sepa crear de nuevo en su corazon el verdadero reino de Dios!
 
 
 
-CAPÍTULO XII
+= CAPÍTULO XII
 
 EMBAJADA DE JUAN Á JESÚS -- MUERTE DE JUAN -- CONEXION DE SU ESCUELA
 CON LA DE JESÚS
@@ -4837,7 +4833,7 @@ de la humanidad.
 
 
 
-CAPÍTULO XIII
+= CAPÍTULO XIII
 
 PRIMERAS TENTATIVAS SOBRE JERUSALEN
 
@@ -5156,7 +5152,7 @@ tiene ya razon de ser, y es irrevocablemente condenado.
 
 
 
-CAPÍTULO XIV
+= CAPÍTULO XIV
 
 RELACIONES DE JESÚS CON LOS GENTILES Y LOS SAMARITANOS
 
@@ -5351,7 +5347,7 @@ inmortal de su fe y de sus esperanzas.
 
 
 
-CAPÍTULO XV
+= CAPÍTULO XV
 
 PRINCIPIO DE LA LEYENDA DE JESÚS -- IDEA QUE TIENE ÉL MISMO DE SU
 MISION SOBRENATURAL
@@ -5639,7 +5635,7 @@ no debe censurarse al que acepta la humanidad tal como es, con sus
 ilusiones y sus delirios, y trata de obrar con ella y sobre ella.
 César sabía perfectamente que no era hijo de Vénus; la Francia no
 sería lo que es hoy, si no hubiese creido por espacio de mil años en
-la santa ampolla[*] de Reims. Fácil nos es á nosotros, pobres
+la santa ampolla _NPIE_  de Reims. Fácil nos es á nosotros, pobres
 impotentes, calificar todo eso de impostura, y orgullosos de nuestra
 tímida honradez, tratar desdeñosamente á los héroes que aceptaron la
 lucha de la vida en otras condiciones. Pero cuando con nuestros
@@ -5652,13 +5648,13 @@ aquellas en que nacieron las creencias que han dominado los siglos.
 Todas las grandes fundaciones descansan en alguna leyenda. Si hay en
 ello un culpable, es sin duda la humanidad, que quiere ser engañada.
 
-  [*] Vaso sagrado, en el cual se conservaba el óleo que servia para
+   _NPIE_  Vaso sagrado, en el cual se conservaba el óleo que servia para
   ungir á los reyes. (N. del T.)
 
 
 
 
-CAPÍTULO XVI
+= CAPÍTULO XVI
 
 MILAGROS
 
@@ -5930,7 +5926,7 @@ retenian á su alrededor.
 
 
 
-CAPÍTULO XVII
+= CAPÍTULO XVII
 
 FORMA DEFINITIVA DE LAS IDEAS DE JESÚS SOBRE EL REINO DE DIOS
 
@@ -6275,7 +6271,7 @@ abrazando á la vez diferentes órdenes de verdades.
 
 
 
-CAPÍTULO XVIII
+= CAPÍTULO XVIII
 
 INSTITUCIONES DE JESÚS
 
@@ -6571,7 +6567,7 @@ la idea, una forma palpable y de exuberante realidad.
 
 
 
-CAPÍTULO XIX
+= CAPÍTULO XIX
 
 PROGRESION CRECIENTE DE ENTUSIASMO Y DE EXALTACION
 
@@ -6819,7 +6815,7 @@ introducirle impecable y para siempre en su celestial serenidad.
 
 
 
-CAPÍTULO XX
+= CAPÍTULO XX
 
 OPOSICION CONTRA JESÚS
 
@@ -7108,7 +7104,7 @@ fuera de Jerusalen»[873].
 
 
 
-CAPÍTULO XXI
+= CAPÍTULO XXI
 
 ÚLTIMO VIAJE DE JESÚS Á JERUSALEN
 
@@ -7461,7 +7457,7 @@ la dominacion romana[932].
 
 
 
-CAPÍTULO XXII
+= CAPÍTULO XXII
 
 MAQUINACIONES DE LOS ENEMIGOS DE JESÚS
 
@@ -7718,7 +7714,7 @@ fiesta.
 
 
 
-CAPÍTULO XXIII
+= CAPÍTULO XXIII
 
 ÚLTIMA SEMANA DE JESÚS
 
@@ -8110,7 +8106,7 @@ abandonarian.
 
 
 
-CAPÍTULO XXIV
+= CAPÍTULO XXIV
 
 ARRESTO Y CAUSA DE JESÚS
 
@@ -8510,7 +8506,7 @@ Para que la sangre que Jesús va á derramar produzca sus frutos serán
 menester mil ochocientos años. Pensadores tan nobles como aquel mártir
 sublime sufrirán en su nombre, durante muchos siglos, la tortura y la
 muerte. Áun hoy dia, en países que se tienen por cristianos, se
-castigan con penas severas los delitos religiosos[*]. Pero Jesús no es
+castigan con penas severas los delitos religiosos _NPIE_ . Pero Jesús no es
 responsable de esos extravíos: el mártir del Gólgota no podia prever
 que el fanatismo de algunos pueblos habia de llegar á convertirle en
 una especie de horrible Moloch, ávido de carne quemada. El
@@ -8529,14 +8525,14 @@ armado de la cuchilla. Si el cristianismo, en vez de perseguir con
 fundador, habria sido más consecuente y sería mucho más acreedor á la
 gratitud del género humano.
 
-  [*] No hace mucho tiempo que fueron condenados á presidio, por la
+   _NPIE_  No hace mucho tiempo que fueron condenados á presidio, por la
   administracion O’Donnell, algunos propagandistas protestantes de
   Granada. (N. del T.)
 
 
 
 
-CAPÍTULO XXV
+= CAPÍTULO XXV
 
 MUERTE DE JESÚS
 
@@ -8571,7 +8567,7 @@ marcha hácia el lugar del suplicio.
 Aquel lugar era un sitio llamado _Gólgotha_, situado fuera de
 Jerusalen, aunque no muy léjos de sus muros[1088]. El nombre de
 _Gólgotha_ significa _cráneo_; corresponde, al parecer, á nuestra
-palabra _Chaumont_[*] y probablemente designaba una colina escueta que
+palabra _Chaumont_ _NPIE_  y probablemente designaba una colina escueta que
 tenía la forma de un cráneo calvo. No se sabe con exactitud el sitio
 donde se hallaba aquella colina; pero es indudable que estaba al Norte
 ó al Nordeste de la ciudad en la elevada y desigual meseta que se
@@ -8584,7 +8580,7 @@ entera[1090]. Ese sitio ocupa un punto demasiado céntrico en la
 ciudad, y es de suponer que en la época de Jesús se hallase
 comprendido en el recinto de la muralla[1091].
 
-  [*] La palabra francesa _chaumont_ es una contraccion de
+   _NPIE_  La palabra francesa _chaumont_ es una contraccion de
   _chauvemont_, esto es, monte-calvo. (N. del T.)
 
 El condenado á muerte debia llevar sobre sus hombros el instrumento de
@@ -8743,7 +8739,7 @@ ancha via que trazaste, siglos de adoradores!
 
 
 
-CAPÍTULO XXVI
+= CAPÍTULO XXVI
 
 JESÚS EN EL SEPULCRO
 
@@ -8874,7 +8870,7 @@ que la pasion de una alucinada dió al mundo un Dios resucitado!
 
 
 
-CAPÍTULO XXVII
+= CAPÍTULO XXVII
 
 SUERTE DE LOS ENEMIGOS DE JESÚS
 
@@ -8993,7 +8989,7 @@ enorme error de Gethsemaní?[1158].
 
 
 
-CAPÍTULO XXVIII
+= CAPÍTULO XXVIII
 
 CARÁCTER ESENCIAL DE LA OBRA DE JESÚS
 
@@ -9581,7 +9577,7 @@ sino despues del sitio del año 70.
 de Mayo de 1857.
 
 
-NOTAS DEL CAPÍTULO PRIMERO
+NOTAS DEL = CAPÍTULO PRIMERO
 
 [67] Esta palabra indica sencillamente los pueblos que hablan ó han
 hablado una de las lenguas llamadas semíticas. Esa designacion es del
@@ -9631,7 +9627,7 @@ III, 97-817. Tác., _Hist._, V, 13.
 [79] Luc., II, 25 y sig.
 
 
-NOTAS DEL CAPÍTULO II
+NOTAS DEL = CAPÍTULO II
 
 [80] Math., XIII, 54 y sig.; Marc., VI, 1 y sig.; Juan, I, 45-46.
 
@@ -9756,7 +9752,7 @@ Galilea tenía más de cinco mil habitantes. Probablemente hay
 exageracion.
 
 
-NOTAS DEL CAPÍTULO III
+NOTAS DEL = CAPÍTULO III
 
 [102] Juan, VIII, 6.
 
@@ -9845,7 +9841,7 @@ III, 2.
 [126] Luc., XI, 27 y sig.
 
 
-NOTAS DEL CAPÍTULO IV
+NOTAS DEL = CAPÍTULO IV
 
 [127] _Yaçna_, XIII, 24; Teopompo. en Plut., _De Iside et Osiride_, §
 47; _Minokhired_, trozo publicado en la _Zeitschrift der Deutschen
@@ -10015,7 +10011,7 @@ siempre en dos.
 [181] Luc., IV, 42; V, 16.
 
 
-NOTAS DEL CAPÍTULO V
+NOTAS DEL = CAPÍTULO V
 
 [182] Ésta es la expresion de Márcos, VI, 3. Cf. Math., XIII, 55.
 Márcos no conoce á José; por el contrario, Juan y Lúcas prefieren la
@@ -10207,7 +10203,7 @@ _Erachin_, 16 _b_.
 empezó á escribir sino en el siglo segundo de nuestra era.
 
 
-NOTAS DEL CAPÍTULO VI
+NOTAS DEL = CAPÍTULO VI
 
 [246] Luc., I, 5; pasaje del evangelio de los Ebionim, conservado por
 Epifanio (_Adv. hær._, XXX, 13).
@@ -10397,7 +10393,7 @@ visitado desde Seetzen.
 [305] Marc., VI, 20. Yo leo ἠπόρει, y no ἐποίει.
 
 
-NOTAS DEL CAPÍTULO VII
+NOTAS DEL = CAPÍTULO VII
 
 [306] Tobías, VIII, 3; Luc., XI, 24.
 
@@ -10480,7 +10476,7 @@ profundamente arraigado en sus discípulos, que sin duda procedia de
 Jesús.
 
 
-NOTAS DEL CAPÍTULO VIII
+NOTAS DEL = CAPÍTULO VIII
 
 [336] Luc., III, 23; evangelio de los Ebionim, en Epif., _Adv. hær._
 XXX, 13.
@@ -10632,7 +10628,7 @@ cubren aún todo el Beled-Bescharrah, y particularmente las montañas
 que forman el cabo Blanco y el cabo Nakoura.
 
 
-NOTAS DEL CAPÍTULO IX
+NOTAS DEL = CAPÍTULO IX
 
 [374] Math., IV, 18; Luc., V, 44 y sig.; Juan, I, 44; XXI, 1 y sig.;
 Jos., _B. J._, III, X, 7; Jacques de Vitri, en el _Gesta Dei per
@@ -10795,7 +10791,7 @@ Talm. de Babil., _Sanhedrin_, 25 _b_.
 [430] Math., IV, 11; Marc., I, 13.
 
 
-NOTAS DEL CAPÍTULO X
+NOTAS DEL = CAPÍTULO X
 
 [431] Math., XIV, 26; Marc., VI, 49; Luc., XXIV, 39; Juan, VI, 19.
 
@@ -10862,7 +10858,7 @@ maroma (κάμιλος).
 [455] Salm. CXXXII, 3.
 
 
-NOTAS DEL CAPÍTULO XI
+NOTAS DEL = CAPÍTULO XI
 
 [456] Math., XXII, 2 y sig.; Luc., XIV, 16 y sig.; Comp. Math., VIII,
 11-12; XXI, 33 y sig.
@@ -10987,7 +10983,7 @@ Esta costumbre existe todavía entre los Israelitas.
 prœm., 76; Talm. de Babil., _Chagiga_, 14 _b_.
 
 
-NOTAS DEL CAPÍTULO XII
+NOTAS DEL = CAPÍTULO XII
 
 [500] Math., XI, 2 y sig.; Luc., VII, 18 y sig.
 
@@ -11063,7 +11059,7 @@ en esos textos parecen muy anteriores á la época de su redaccion.
 «Bautistas.» _Mogtasila_ tiene en árabe el mismo significado.
 
 
-NOTAS DEL CAPÍTULO XIII
+NOTAS DEL = CAPÍTULO XIII
 
 [530] Sin embargo, los sinópticos aluden vagamente á esos viajes
 (Math., XXIII, 37; Luc., XIII, 34). Conocen tan bien como Juan la
@@ -11211,7 +11207,7 @@ Antiguo Testamento se cumplieron en Jesús.--Luc., XVI, 17.
 XXIV, 47.
 
 
-NOTAS DEL CAPÍTULO XIV
+NOTAS DEL = CAPÍTULO XIV
 
 [575] Math., XV, 9.
 
@@ -11323,7 +11319,7 @@ Jesús, y muchas circunstancias de la narracion tienen un carácter
 peculiar de verdad.
 
 
-NOTAS DEL CAPÍTULO XV
+NOTAS DEL = CAPÍTULO XV
 
 [614] Las indecisiones de los discípulos inmediatos de Jesús, de los
 cuales una fraccion numerosa permaneció adicta al judaismo, pudieran
@@ -11516,7 +11512,7 @@ VII, 1 y sig.
 28; Luc., IX, 8 y sig., 19.
 
 
-NOTAS DEL CAPÍTULO XVI
+NOTAS DEL = CAPÍTULO XVI
 
 [671] Math., I, 22; II, 5-6, 15, 18; IV, 15.
 
@@ -11614,7 +11610,7 @@ infancia_, en Thilo, _Cod. apocr. N. T._, p. CX, nota.
 [706] Juan, VI, 14-15.
 
 
-NOTAS DEL CAPÍTULO XVII
+NOTAS DEL = CAPÍTULO XVII
 
 [707] Juan, V, 1; VII, 2. Adoptamos el sistema de Juan, segun el cual
 la vida pública de Jesús duró tres años. Los sinópticos, por el
@@ -11759,7 +11755,7 @@ la noche del mundo...».
 [754] _I Cor._, XV, 52.
 
 
-NOTAS DEL CAPÍTULO XVIII
+NOTAS DEL = CAPÍTULO XVIII
 
 [755] _Hech._, I, 15; _I Cor._, XV, 5; _Gal._, I, 10.
 
@@ -11891,7 +11887,7 @@ oficio del pescado en las comidas evangélicas.
 [805] Cánon de las misas griegas y de la misa latina (muy antiguo).
 
 
-NOTAS DEL CAPÍTULO XIX
+NOTAS DEL = CAPÍTULO XIX
 
 [806] Luc., XIV, 33; _Hech._, IV, 32 y sig.; V, 1-11.
 
@@ -11970,7 +11966,7 @@ Lúcas.
 [839] Marc., XI, 12-14, 20 y sig.
 
 
-NOTAS DEL CAPÍTULO XX
+NOTAS DEL = CAPÍTULO XX
 
 [840] Math., XII, 14-16; Marc., III, 7; IX, 29-30.
 
@@ -12053,7 +12049,7 @@ XI, 38 y sig.
 [873] Luc., XIII, 33.
 
 
-NOTAS DEL CAPÍTULO XXI
+NOTAS DEL = CAPÍTULO XXI
 
 [874] Math., XVI, 20-21; Marc., VIII, 30-31.
 
@@ -12226,7 +12222,7 @@ XI, 25.
 [932] Luc., XI, 53-54.
 
 
-NOTAS DEL CAPÍTULO XXII
+NOTAS DEL = CAPÍTULO XXII
 
 [933] Juan, X, 23.
 
@@ -12312,7 +12308,7 @@ seguimos el sistema de Juan. Los sinópticos parecen muy poco
 instruidos sobre el período de la vida de Jesús anterior á la Pasion.
 
 
-NOTAS DEL CAPÍTULO XXIII
+NOTAS DEL = CAPÍTULO XXIII
 
 [969] Luc., XIX, 11.
 
@@ -12468,7 +12464,7 @@ Juan. Esa expresion no parece haber sido familiar á Jesús.
 sig.; Juan, XIII, 36 y sig.
 
 
-NOTAS DEL CAPÍTULO XXIV
+NOTAS DEL = CAPÍTULO XXIV
 
 [1024] Juan, XIII, 30.
 
@@ -12639,7 +12635,7 @@ Filon, _Leg. ad Caium_, § 38.
 [1084] _Deuter._, XIII, 1 y sig.
 
 
-NOTAS DEL CAPÍTULO XXV
+NOTAS DEL = CAPÍTULO XXV
 
 [1085] Jos., _Ant._, XX, IX, 1. El Talmud presenta la condena de Jesús
 como puramente religiosa y pretende en efecto que fué apedreado, ó á
@@ -12812,7 +12808,7 @@ series_, 140; texto árabe publicado en Kosegarten, _op. cit._, p. 63.
 30.
 
 
-NOTAS DEL CAPÍTULO XXVI
+NOTAS DEL = CAPÍTULO XXVI
 
 [1122] Math., XXVII, 46; Marc., XV, 37; Luc., XXIII, 44. Comp. Juan,
 XIX, 14.
@@ -12896,7 +12892,7 @@ de apoyo á muchos manuscritos. En el cuarto evangelio (XX, 1-2, 11,
 resurreccion.
 
 
-NOTAS DEL CAPÍTULO XXVII
+NOTAS DEL = CAPÍTULO XXVII
 
 [1146] El año 33 corresponde exactamente á uno de los datos del
 problema, á saber, que el 14 de Nisan fué un viérnes. Para desechar el
@@ -12943,7 +12939,7 @@ esto es, con una especie de repulsion piadosa, por cuanto á que él fué
 quien prendió á Jesús.
 
 
-NOTAS DEL CAPÍTULO XXVIII
+NOTAS DEL = CAPÍTULO XXVIII
 
 [1159] Math., VIII, 5 y sig.; Luc., VII, 1 y sig.; Juan, XII, 20 y
 sig. Comp. Jos., _Ant._, XVIII, III, 3.
@@ -12983,424 +12979,72 @@ FIN DE LAS NOTAS DE LA VIDA DE JESÚS.
   INTRODUCCION, en la cual se trata principalmente de las fuentes de
   esta historia. 3
 
-  CAPÍTULO I.--Rango de Jesús en la historia del mundo. 33
+  = CAPÍTULO I.--Rango de Jesús en la historia del mundo. 33
 
-  CAPÍTULO II.--Infancia y juventud de Jesús. -- Sus primeras
+  = CAPÍTULO II.--Infancia y juventud de Jesús. -- Sus primeras
   impresiones. 42
 
-  CAPÍTULO III.--Educacion de Jesús. 46
+  = CAPÍTULO III.--Educacion de Jesús. 46
 
-  CAPÍTULO IV.--Órden de ideas en cuyo seno creció Jesús. 53
+  = CAPÍTULO IV.--Órden de ideas en cuyo seno creció Jesús. 53
 
-  CAPÍTULO V.--Primeros aforismos de Jesús. -- Sus ideas de un Dios
+  = CAPÍTULO V.--Primeros aforismos de Jesús. -- Sus ideas de un Dios
   padre y de una religion pura. -- Primeros discípulos. 66
 
-  CAPÍTULO VI.--Juan Bautista. -- Viaje de Jesús hácia Juan y su
+  = CAPÍTULO VI.--Juan Bautista. -- Viaje de Jesús hácia Juan y su
   permanencia en el desierto de Judea. -- Adopta el bautismo de Juan.
   76
 
-  CAPÍTULO VII.--Desarrollo de las ideas de Jesús sobre el reino de
+  = CAPÍTULO VII.--Desarrollo de las ideas de Jesús sobre el reino de
   Dios. 84
 
-  CAPÍTULO VIII.--Jesús en Capharnahum. 92
+  = CAPÍTULO VIII.--Jesús en Capharnahum. 92
 
-  CAPÍTULO IX.--Los discípulos de Jesús. 100
+  = CAPÍTULO IX.--Los discípulos de Jesús. 100
 
-  CAPÍTULO X.--Predicacion del lago. 107
+  = CAPÍTULO X.--Predicacion del lago. 107
 
-  CAPÍTULO XI.--El reino de Dios concebido como el advenimiento de los
+  = CAPÍTULO XI.--El reino de Dios concebido como el advenimiento de los
   pobres. 114
 
-  CAPÍTULO XII.--Embajada de Juan á Jesús. -- Muerte de Juan. --
+  = CAPÍTULO XII.--Embajada de Juan á Jesús. -- Muerte de Juan. --
   Conexion de su escuela con la de Jesús. 122
 
-  CAPÍTULO XIII.--Primeras tentativas sobre Jerusalen. 127
+  = CAPÍTULO XIII.--Primeras tentativas sobre Jerusalen. 127
 
-  CAPÍTULO XIV.--Relaciones de Jesús con los gentiles y los
+  = CAPÍTULO XIV.--Relaciones de Jesús con los gentiles y los
   samaritanos. 135
 
-  CAPÍTULO XV.--Principio de la leyenda de Jesús. -- Idea que tiene él
+  = CAPÍTULO XV.--Principio de la leyenda de Jesús. -- Idea que tiene él
   mismo de su mision sobrenatural. 140
 
-  CAPÍTULO XVI.--Milagros. 148
+  = CAPÍTULO XVI.--Milagros. 148
 
-  CAPÍTULO XVII.--Forma definitiva de las ideas de Jesús sobre el
+  = CAPÍTULO XVII.--Forma definitiva de las ideas de Jesús sobre el
   reino de Dios. 155
 
-  CAPÍTULO XVIII.--Instituciones de Jesús. 164
+  = CAPÍTULO XVIII.--Instituciones de Jesús. 164
 
-  CAPÍTULO XIX.--Progresion creciente de entusiasmo y de exaltacion.
+  = CAPÍTULO XIX.--Progresion creciente de entusiasmo y de exaltacion.
   172
 
-  CAPÍTULO XX.--Oposicion contra Jesús. 178
+  = CAPÍTULO XX.--Oposicion contra Jesús. 178
 
-  CAPÍTULO XXI.--Último viaje de Jesús á Jerusalen. 186
+  = CAPÍTULO XXI.--Último viaje de Jesús á Jerusalen. 186
 
-  CAPÍTULO XXII.--Maquinaciones de los enemigos de Jesús. 195
+  = CAPÍTULO XXII.--Maquinaciones de los enemigos de Jesús. 195
 
-  CAPÍTULO XXIII.--Última semana de Jesús. 201
+  = CAPÍTULO XXIII.--Última semana de Jesús. 201
 
-  CAPÍTULO XXIV.--Arresto y causa de Jesús. 212
+  = CAPÍTULO XXIV.--Arresto y causa de Jesús. 212
 
-  CAPÍTULO XXV.--Muerte de Jesús. 223
+  = CAPÍTULO XXV.--Muerte de Jesús. 223
 
-  CAPÍTULO XXVI.--Jesús en el sepulcro. 228
+  = CAPÍTULO XXVI.--Jesús en el sepulcro. 228
 
-  CAPÍTULO XXVII.--Suerte de los enemigos de Jesús. 231
+  = CAPÍTULO XXVII.--Suerte de los enemigos de Jesús. 231
 
-  CAPÍTULO XXVIII.--Carácter esencial de la obra de Jesús. 234
+  = CAPÍTULO XXVIII.--Carácter esencial de la obra de Jesús. 234
 
   NOTAS. 245
 
-
-
-*** END OF THE PROJECT GUTENBERG EBOOK VIDA DE JESÚS ***
-
-
-    
-
-Updated editions will replace the previous one—the old editions will
-be renamed.
-
-Creating the works from print editions not protected by U.S. copyright
-law means that no one owns a United States copyright in these works,
-so the Foundation (and you!) can copy and distribute it in the United
-States without permission and without paying copyright royalties.
-Special rules, set forth in the General Terms of Use part of this
-license, apply to copying and distributing Project Gutenberg™
-electronic works to protect the PROJECT GUTENBERG™ concept and
-trademark. Project Gutenberg is a registered trademark, and may not be
-used if you charge for an eBook, except by following the terms of the
-trademark license, including paying royalties for use of the Project
-Gutenberg trademark. If you do not charge anything for copies of this
-eBook, complying with the trademark license is very easy. You may use
-this eBook for nearly any purpose such as creation of derivative
-works, reports, performances and research. Project Gutenberg eBooks
-may be modified and printed and given away—you may do practically
-ANYTHING in the United States with eBooks not protected by U.S.
-copyright law. Redistribution is subject to the trademark license,
-especially commercial redistribution.
-
-
-START: FULL LICENSE
-
-THE FULL PROJECT GUTENBERG™ LICENSE
-
-PLEASE READ THIS BEFORE YOU DISTRIBUTE OR USE THIS WORK
-
-To protect the Project Gutenberg™ mission of promoting the free
-distribution of electronic works, by using or distributing this work
-(or any other work associated in any way with the phrase “Project
-Gutenberg”), you agree to comply with all the terms of the Full
-Project Gutenberg License available with this file or online at
-www.gutenberg.org/license.
-
-Section 1. General Terms of Use and Redistributing Project Gutenberg
-electronic works
-
-1.A. By reading or using any part of this Project Gutenberg electronic
-work, you indicate that you have read, understand, agree to and accept
-all the terms of this license and intellectual property
-(trademark/copyright) agreement. If you do not agree to abide by all
-the terms of this agreement, you must cease using and return or
-destroy all copies of Project Gutenberg electronic works in your
-possession. If you paid a fee for obtaining a copy of or access to a
-Project Gutenberg electronic work and you do not agree to be bound by
-the terms of this agreement, you may obtain a refund from the person
-or entity to whom you paid the fee as set forth in paragraph 1.E.8.
-
-1.B. “Project Gutenberg” is a registered trademark. It may only be
-used on or associated in any way with an electronic work by people who
-agree to be bound by the terms of this agreement. There are a few
-things that you can do with most Project Gutenberg electronic works
-even without complying with the full terms of this agreement. See
-paragraph 1.C below. There are a lot of things you can do with Project
-Gutenberg electronic works if you follow the terms of this agreement
-and help preserve free future access to Project Gutenberg electronic
-works. See paragraph 1.E below.
-
-1.C. The Project Gutenberg Literary Archive Foundation (“the
-Foundation” or PGLAF), owns a compilation copyright in the collection
-of Project Gutenberg electronic works. Nearly all the individual works
-in the collection are in the public domain in the United States. If an
-individual work is unprotected by copyright law in the United States
-and you are located in the United States, we do not claim a right to
-prevent you from copying, distributing, performing, displaying or
-creating derivative works based on the work as long as all references
-to Project Gutenberg are removed. Of course, we hope that you will
-support the Project Gutenberg mission of promoting free access to
-electronic works by freely sharing Project Gutenberg works in
-compliance with the terms of this agreement for keeping the Project
-Gutenberg name associated with the work. You can easily comply with
-the terms of this agreement by keeping this work in the same format
-with its attached full Project Gutenberg License when you share it
-without charge with others.
-
-1.D. The copyright laws of the place where you are located also govern
-what you can do with this work. Copyright laws in most countries are
-in a constant state of change. If you are outside the United States,
-check the laws of your country in addition to the terms of this
-agreement before downloading, copying, displaying, performing,
-distributing or creating derivative works based on this work or any
-other Project Gutenberg work. The Foundation makes no representations
-concerning the copyright status of any work in any country other than
-the United States.
-
-1.E. Unless you have removed all references to Project Gutenberg:
-
-1.E.1. The following sentence, with active links to, or other
-immediate access to, the full Project Gutenberg License must appear
-prominently whenever any copy of a Project Gutenberg work (any work on
-which the phrase “Project Gutenberg” appears, or with which the phrase
-“Project Gutenberg” is associated) is accessed, displayed, performed,
-viewed, copied or distributed:
-
-    This eBook is for the use of anyone anywhere in the United States
-    and most other parts of the world at no cost and with almost no
-    restrictions whatsoever. You may copy it, give it away or re-use
-    it under the terms of the Project Gutenberg™ License included with
-    this eBook or online at www.gutenberg.org. If you are not located
-    in the United States, you will have to check the laws of the
-    country where you are located before using this eBook.
-  
-1.E.2. If an individual Project Gutenberg electronic work is derived
-from texts not protected by U.S. copyright law (does not contain a
-notice indicating that it is posted with permission of the copyright
-holder), the work can be copied and distributed to anyone in the
-United States without paying any fees or charges. If you are
-redistributing or providing access to a work with the phrase “Project
-Gutenberg” associated with or appearing on the work, you must comply
-either with the requirements of paragraphs 1.E.1 through 1.E.7 or
-obtain permission for the use of the work and the Project Gutenberg
-trademark as set forth in paragraphs 1.E.8 or 1.E.9.
-
-1.E.3. If an individual Project Gutenberg electronic work is posted
-with the permission of the copyright holder, your use and distribution
-must comply with both paragraphs 1.E.1 through 1.E.7 and any
-additional terms imposed by the copyright holder. Additional terms
-will be linked to the Project Gutenberg License for all works posted
-with the permission of the copyright holder found at the beginning of
-this work.
-
-1.E.4. Do not unlink or detach or remove the full Project Gutenberg
-License terms from this work, or any files containing a part of this
-work or any other work associated with Project Gutenberg.
-
-1.E.5. Do not copy, display, perform, distribute or redistribute this
-electronic work, or any part of this electronic work, without
-prominently displaying the sentence set forth in paragraph 1.E.1 with
-active links or immediate access to the full terms of the Project
-Gutenberg License.
-
-1.E.6. You may convert to and distribute this work in any binary,
-compressed, marked up, nonproprietary or proprietary form, including
-any word processing or hypertext form. However, if you provide access
-to or distribute copies of a Project Gutenberg work in a format other
-than “Plain Vanilla ASCII” or other format used in the official
-version posted on the official Project Gutenberg website
-(www.gutenberg.org), you must, at no additional cost, fee or expense
-to the user, provide a copy, a means of exporting a copy, or a means
-of obtaining a copy upon request, of the work in its original “Plain
-Vanilla ASCII” or other form. Any alternate format must include the
-full Project Gutenberg License as specified in paragraph 1.E.1.
-
-1.E.7. Do not charge a fee for access to, viewing, displaying,
-performing, copying or distributing any Project Gutenberg works unless
-you comply with paragraph 1.E.8 or 1.E.9.
-
-1.E.8. You may charge a reasonable fee for copies of or providing
-access to or distributing Project Gutenberg electronic works provided
-that:
-
-    • You pay a royalty fee of 20% of the gross profits you derive
-        from the use of Project Gutenberg works calculated using the
-        method you already use to calculate your applicable taxes. The
-        fee is owed to the owner of the Project Gutenberg trademark,
-        but he has agreed to donate royalties under this paragraph to
-        the Project Gutenberg Literary Archive Foundation. Royalty
-        payments must be paid within 60 days following each date on
-        which you prepare (or are legally required to prepare) your
-        periodic tax returns. Royalty payments should be clearly
-        marked as such and sent to the Project Gutenberg Literary
-        Archive Foundation at the address specified in Section 4,
-        “Information about donations to the Project Gutenberg Literary
-        Archive Foundation.”
-    
-    • You provide a full refund of any money paid by a user who
-        notifies you in writing (or by e-mail) within 30 days of
-        receipt that s/he does not agree to the terms of the full
-        Project Gutenberg™ License. You must require such a user to
-        return or destroy all copies of the works possessed in a
-        physical medium and discontinue all use of and all access to
-        other copies of Project Gutenberg™ works.
-    
-    • You provide, in accordance with paragraph 1.F.3, a full refund
-        of any money paid for a work or a replacement copy, if a
-        defect in the electronic work is discovered and reported to
-        you within 90 days of receipt of the work.
-    
-    • You comply with all other terms of this agreement for free
-        distribution of Project Gutenberg™ works.
-    
-
-1.E.9. If you wish to charge a fee or distribute a Project Gutenberg™
-electronic work or group of works on different terms than are set
-forth in this agreement, you must obtain permission in writing from
-the Project Gutenberg Literary Archive Foundation, the manager of the
-Project Gutenberg™ trademark. Contact the Foundation as set forth in
-Section 3 below.
-
-1.F.
-
-1.F.1. Project Gutenberg volunteers and employees expend considerable
-effort to identify, do copyright research on, transcribe and proofread
-works not protected by U.S. copyright law in creating the Project
-Gutenberg™ collection. Despite these efforts, Project Gutenberg™
-electronic works, and the medium on which they may be stored, may
-contain “Defects,” such as, but not limited to, incomplete, inaccurate
-or corrupt data, transcription errors, a copyright or other
-intellectual property infringement, a defective or damaged disk or
-other medium, a computer virus, or computer codes that damage or
-cannot be read by your equipment.
-
-1.F.2. LIMITED WARRANTY, DISCLAIMER OF DAMAGES - Except for the “Right
-of Replacement or Refund” described in paragraph 1.F.3, the Project
-Gutenberg Literary Archive Foundation, the owner of the Project
-Gutenberg™ trademark, and any other party distributing a Project
-Gutenberg™ electronic work under this agreement, disclaim all
-liability to you for damages, costs and expenses, including legal
-fees. YOU AGREE THAT YOU HAVE NO REMEDIES FOR NEGLIGENCE, STRICT
-LIABILITY, BREACH OF WARRANTY OR BREACH OF CONTRACT EXCEPT THOSE
-PROVIDED IN PARAGRAPH 1.F.3. YOU AGREE THAT THE FOUNDATION, THE
-TRADEMARK OWNER, AND ANY DISTRIBUTOR UNDER THIS AGREEMENT WILL NOT BE
-LIABLE TO YOU FOR ACTUAL, DIRECT, INDIRECT, CONSEQUENTIAL, PUNITIVE OR
-INCIDENTAL DAMAGES EVEN IF YOU GIVE NOTICE OF THE POSSIBILITY OF SUCH
-DAMAGE.
-
-1.F.3. LIMITED RIGHT OF REPLACEMENT OR REFUND - If you discover a
-defect in this electronic work within 90 days of receiving it, you can
-receive a refund of the money (if any) you paid for it by sending a
-written explanation to the person you received the work from. If you
-received the work on a physical medium, you must return the medium
-with your written explanation. The person or entity that provided you
-with the defective work may elect to provide a replacement copy in
-lieu of a refund. If you received the work electronically, the person
-or entity providing it to you may choose to give you a second
-opportunity to receive the work electronically in lieu of a refund. If
-the second copy is also defective, you may demand a refund in writing
-without further opportunities to fix the problem.
-
-1.F.4. Except for the limited right of replacement or refund set forth
-in paragraph 1.F.3, this work is provided to you ‘AS-IS’, WITH NO
-OTHER WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PURPOSE.
-
-1.F.5. Some states do not allow disclaimers of certain implied
-warranties or the exclusion or limitation of certain types of damages.
-If any disclaimer or limitation set forth in this agreement violates
-the law of the state applicable to this agreement, the agreement shall
-be interpreted to make the maximum disclaimer or limitation permitted
-by the applicable state law. The invalidity or unenforceability of any
-provision of this agreement shall not void the remaining provisions.
-
-1.F.6. INDEMNITY - You agree to indemnify and hold the Foundation, the
-trademark owner, any agent or employee of the Foundation, anyone
-providing copies of Project Gutenberg™ electronic works in accordance
-with this agreement, and any volunteers associated with the
-production, promotion and distribution of Project Gutenberg™
-electronic works, harmless from all liability, costs and expenses,
-including legal fees, that arise directly or indirectly from any of
-the following which you do or cause to occur: (a) distribution of this
-or any Project Gutenberg work, (b) alteration, modification, or
-additions or deletions to any Project Gutenberg work, and (c) any
-Defect you cause.
-
-Section 2. Information about the Mission of Project Gutenberg
-
-Project Gutenberg is synonymous with the free distribution of
-electronic works in formats readable by the widest variety of
-computers including obsolete, old, middle-aged and new computers. It
-exists because of the efforts of hundreds of volunteers and donations
-from people in all walks of life.
-
-Volunteers and financial support to provide volunteers with the
-assistance they need are critical to reaching Project Gutenberg’s
-goals and ensuring that the Project Gutenberg collection will remain
-freely available for generations to come. In 2001, the Project
-Gutenberg Literary Archive Foundation was created to provide a secure
-and permanent future for Project Gutenberg and future generations. To
-learn more about the Project Gutenberg Literary Archive Foundation and
-how your efforts and donations can help, see Sections 3 and 4 and the
-Foundation information page at www.gutenberg.org.
-
-Section 3. Information about the Project Gutenberg Literary Archive
-Foundation
-
-The Project Gutenberg Literary Archive Foundation is a non-profit
-501(c)(3) educational corporation organized under the laws of the
-state of Mississippi and granted tax exempt status by the Internal
-Revenue Service. The Foundation’s EIN or federal tax identification
-number is 64-6221541. Contributions to the Project Gutenberg Literary
-Archive Foundation are tax deductible to the full extent permitted by
-U.S. federal laws and your state’s laws.
-
-The Foundation’s business office is located at 41 Watchung Plaza #516,
-Montclair NJ 07042, USA, +1 (862) 621-9288. Email contact links and up
-to date contact information can be found at the Foundation’s website
-and official page at www.gutenberg.org/contact
-
-Section 4. Information about Donations to the Project Gutenberg
-Literary Archive Foundation
-
-Project Gutenberg™ depends upon and cannot survive without widespread
-public support and donations to carry out its mission of increasing
-the number of public domain and licensed works that can be freely
-distributed in machine-readable form accessible by the widest array of
-equipment including outdated equipment. Many small donations ($1 to
-$5,000) are particularly important to maintaining tax exempt status
-with the IRS.
-
-The Foundation is committed to complying with the laws regulating
-charities and charitable donations in all 50 states of the United
-States. Compliance requirements are not uniform and it takes a
-considerable effort, much paperwork and many fees to meet and keep up
-with these requirements. We do not solicit donations in locations
-where we have not received written confirmation of compliance. To SEND
-DONATIONS or determine the status of compliance for any particular
-state visit www.gutenberg.org/donate.
-
-While we cannot and do not solicit contributions from states where we
-have not met the solicitation requirements, we know of no prohibition
-against accepting unsolicited donations from donors in such states who
-approach us with offers to donate.
-
-International donations are gratefully accepted, but we cannot make
-any statements concerning tax treatment of donations received from
-outside the United States. U.S. laws alone swamp our small staff.
-
-Please check the Project Gutenberg web pages for current donation
-methods and addresses. Donations are accepted in a number of other
-ways including checks, online payments and credit card donations. To
-donate, please visit: www.gutenberg.org/donate.
-
-Section 5. General Information About Project Gutenberg electronic
-works
-
-Professor Michael S. Hart was the originator of the Project Gutenberg
-concept of a library of electronic works that could be freely shared
-with anyone. For forty years, he produced and distributed Project
-Gutenberg eBooks with only a loose network of volunteer support.
-
-Project Gutenberg eBooks are often created from several printed
-editions, all of which are confirmed as not protected by copyright in
-the U.S. unless a copyright notice is included. Thus, we do not
-necessarily keep eBooks in compliance with any particular paper
-edition.
-
-Most people start at our website which has the main PG search
-facility: www.gutenberg.org.
-
-This website includes information about Project Gutenberg, including
-how to make donations to the Project Gutenberg Literary Archive
-Foundation, how to help produce our new eBooks, and how to subscribe
-to our email newsletter to hear about new eBooks.
