@@ -27,7 +27,8 @@
 #pagebreak()
 
 //#outline()
-#outline(title: [Índice General], indent: 1.0em)
+//#outline(title: [Índice General], indent: 1.0em)
+#outline(title: "Índice General", indent: .25em)
 
 // Salto de página tras el indice
 //#pagebreak()
