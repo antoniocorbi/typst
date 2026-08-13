@@ -1,111 +1,4 @@
-#+BEGIN_EXPORT typst
-
-// ┌──────────────────────┐
-// │ Formato de la página │
-// └──────────────────────┘
-#set page(
-  paper: "a4",
-  margin: (x: 2.5cm, top: 3cm, bottom: 2.5cm),
-  // Encabezado y pie de página dinámicos
-  header: context {
-    let page-num = counter(page).get().first()
-    // No mostrar encabezado en la portada (página 1)
-    if page-num > 1 [
-      #text(9pt, fill: luma(120), style: "italic")[Vida de Jesús]
-      #h(1fr)
-      #text(9pt, fill: luma(120))[#page-num]
-    ]
-  },
-  footer: context {
-    let page-num = counter(page).get().first()
-    if page-num > 1 [
-      #align(center)[#page-num]
-    ]
-  }
-)
-
-// ┌───────────────────────────────────┐
-// │ Configuración de texto y párrafos │
-// └───────────────────────────────────┘
-#set text(font: "Linux Libertine", size: 12pt, lang: "es", hyphenate: true)
-#set par(justify: true, leading: 0.7em, first-line-indent: 1.5em)
-#set heading(numbering: "1.1")
-
-// ┌────────────────────────────────────────────────────────────────────────┐
-// │ Regla para que los Títulos de Nivel 1 (Capítulos) actúen como en LaTeX │
-// └────────────────────────────────────────────────────────────────────────┘
-#show heading.where(level: 1): it => {
-  // Forzar que cada capítulo empiece en página nueva de manera inteligente
-  pagebreak(weak: true)
-
-  v(3cm) // Espacio superior antes del título del capítulo
-  align(left)[
-      // #text(12pt, weight: "regular", fill: luma(100))[
-      //     // Obtener y mostrar el número del capítulo
-      //     = KAPÍTULO //#counter(heading).display()
-      // ]
-      // #v(0.5em)
-      #text(20pt, weight: "bold")[#it.body]
-  ]
-  v(1cm) // Espacio antes del primer párrafo
-}
-
-// ┌───────────────────────────────────────────────────────────────────────────┐
-// │ Regla para que los Títulos de Nivel 2 (SubCapítulos) actúen como en LaTeX │
-// └───────────────────────────────────────────────────────────────────────────┘
-#show heading.where(level: 2): it => {
-  v(0.0cm) // Espacio superior antes del título del capítulo
-  align(left)[
-      // #text(12pt, weight: "regular", fill: luma(100))[
-      //     // Obtener y mostrar el número del capítulo
-      //     = KAPÍTULO //#counter(heading).display()
-      // ]
-      // #v(0.5em)
-      #text(11pt, weight: "bold", style: "italic")[#smallcaps(it.body)]
-  ]
-  v(0.25cm) // Espacio antes del primer párrafo
-}
-
-// ┌───────────────────────────────────────┐
-// │ PORTADA (Portada limpia estilo libro) │
-// └───────────────────────────────────────┘
-#align(center + horizon)[
-  #text(32pt, weight: "bold")[VIDA DE JESÚS]
-
-  #v(1cm)
-  #text(16pt, style: "italic")[HISTORIA DE LOS ORÍGENES DEL CRISTIANISMO \ LIBRO
-  PRIMERO]
-
-  #v(4cm)
-  #text(16pt)[Ernesto Renán]
-
-  #v(1em)
-  #text(9pt, fill: luma(100))[MADRID\ LIBRERÍA DE ALFONSO DURÁN\ CARRERA DE S. GERÓNIMO, 2\ 1869]
-]
-
-// Salto de página tras la portada
-#pagebreak()
-
-// Reiniciar el contador de páginas para el contenido principal
-#counter(page).update(1)
-
-// ┌──────────────────────────────┐
-// │ ÍNDICE (Tabla de contenidos) │
-// └──────────────────────────────┘
-#show outline.entry.where(
-  level: 1
-): set block(above: 1.2em)
-
-//#outline()
-#outline(title: [Índice General], indent: 1.0em)
-
-// Salto de página tras el indice
-//#pagebreak()
-
-// ┌─────────────────────┐
-// │ CONTENIDO DEL LIBRO │
-// └─────────────────────┘
-#+END_EXPORT
+#+INCLUDE: "./setup.typ" export typst
 
 * PRÓLOGO
 
@@ -133,7 +26,7 @@ verdades que dominan la muerte, que impiden temerla y casi nos la
 hacen amar.
 
 // Salto de página tras el prólogo
-#pagebreak()
+#+TYPST: #pagebreak()
 
 * INTRODUCCION
 ** EN DONDE PRINCIPALMENTE SE TRATA DE LAS FUENTES DE ESTA HISTORIA
@@ -1742,13 +1635,9 @@ el curso de las cosas humanas, consolarse de su contingencia y
 tranquilizarse respecto al fin divino que el mundo prosigue á traves
 de infinitos desfallecimientos y no obstante la vanidad universal.
 
-
-
-
 * CAPÍTULO III
 
 ** EDUCACION DE JESÚS
-
 
 Aquella naturaleza, á la vez risueña y grandiosa, constituyó toda la
 educacion de Jesús. Sin duda aprendió á leer y á escribir[102] segun
@@ -1990,13 +1879,9 @@ sangre, el amor, la patria, cuanto constituye al hombre, para no
 albergar en su alma y su corazon sino la idea que se le presentaba
 como la forma absoluta del bien y de la verdad.
 
-
-
-
 * CAPÍTULO IV
 
 ** ÓRDEN DE IDEAS EN CUYO SENO CRECIÓ JESÚS
-
 
 Así como la tierra ya enfriada por haberse apagado el fuego que la
 penetraba no permite comprender los fenómenos de la creacion
@@ -2475,9 +2360,6 @@ trasparentes, en medio de aquellos grupos de mujeres y niños que
 esperaban la salud de Israel, con la alegría en el alma y el cántico
 de los ángeles en el corazon.
 
-
-
-
 * CAPÍTULO V
 
 ** PRIMEROS AFORISMOS DE JESÚS -- SUS IDEAS DE UN DIOS PADRE Y DE UNA RELIGION PURA -- PRIMEROS DISCÍPULOS
@@ -2881,13 +2763,9 @@ que, sintiendo el bien, le hizo triunfar sellándole con su sangre.
 Jesús no tiene rival bajo este doble punto de vista; su gloria
 permanece entera y será renovada constantemente.
 
-
-
-
 * CAPÍTULO VI
 
 ** JUAN BAUTISTA -- VIAJE DE JESÚS HÁCIA JUAN Y SU PERMANENCIA EN EL DESIERTO DE JUDEA -- ADOPTA EL BAUTISMO DE JUAN
-
 
 Por aquel tiempo apareció y se halló en relacion con Jesús un hombre
 extraordinario, cuya vida, á causa de la escasez de documentos, es
@@ -3195,13 +3073,9 @@ venida del Mesías, y desde su calabozo seguia atentamente los
 movimientos exteriores, tratando de descubrir en ellos los signos
 favorables al cumplimiento de las esperanzas que alimentaba.
 
-
-
-
 * CAPÍTULO VII
 
 ** DESARROLLO DE LAS IDEAS DE JESÚS SOBRE EL REINO DE DIOS
-
 
 Hasta el arresto de Juan, que aproximadamente le hacemos constar en el
 verano del año 29, Jesús no se separó de las cercanías del mar Muerto
@@ -3513,13 +3387,9 @@ conseguir el triunfo. El sentimiento que ha hecho del «mundano» la
 antítesis del «cristiano» tiene en las ideas del maestro plena
 justificacion[335].
 
-
-
-
 * CAPÍTULO VIII
 
 ** JESÚS EN CAPHARNAHUM
-
 
 Poseido de una idea cada vez más imperiosa y exclusiva, Jesús marchará
 en adelante con una especie de impasibilidad fatal por la senda que su
@@ -3814,13 +3684,9 @@ suyo. Jesús no aprendió nada en aquellos viajes, y de ellos regresaba
 impaciente á su querida ribera de Genesareth: allí estaba el centro de
 sus pensamientos; allí encontraba fe y amor.
 
-
-
-
 * CAPÍTULO IX
 
 ** LOS DISCÍPULOS DE JESÚS
-
 
 En aquel paraíso terrenal, que hasta entónces no habia probado apénas
 los efectos de las grandes revoluciones de la historia, vivia una
@@ -4073,13 +3939,9 @@ montañas conversaba con Moisés y con Elías[429], y se creia que en sus
 momentos de soledad bajaban los ángeles á rendirle homenaje y á
 establecer un comercio sobrenatural entre el cielo y él[430].
 
-
-
-
 * CAPÍTULO X
 
 ** PREDICACION DEL LAGO
-
 
 Tal era el grupo que rodeaba á Jesús en las márgenes del lago de
 Tiberiade. La aristocracia estaba representada por un aduanero ó
@@ -4349,14 +4211,9 @@ perfume de otro mundo, como el fresco «rocío que desciende sobre el
 monte Hermon[455],» y ha impedido á lo árido y lo vulgar invadir
 completamente el campo de Dios.
 
-
-
-
 * CAPÍTULO XI
 
 EL REINO DE DIOS CONCEBIDO COMO EL ADVENIMIENTO DE LOS POBRES
-
-
 Esas máximas, buenas en un país donde los elementos de la vida se
 componian de aire y de luz, y ese dulce comunismo de un grupo de hijos
 de Dios, que descansaban confiados en el seno de su padre, podian
@@ -4657,14 +4514,9 @@ aparicion celestial, y sin ensueños milenarios, sin paraíso quimérico,
 sin otro móvil que la rectitud de su voluntad y la poesía del alma,
 sepa crear de nuevo en su corazon el verdadero reino de Dios!
 
-
-
-
 * CAPÍTULO XII
 
 ** EMBAJADA DE JUAN Á JESÚS -- MUERTE DE JUAN -- CONEXION DE SU ESCUELA CON LA DE JESÚS
-
-
 Miéntras que la risueña Galilea celebraba con festejos la venida del
 muy amado, el triste Juan se consumia de impaciencia y deseo en su
 prision de Machero. Las doctrinas y el éxito que alcanzaba el jóven
@@ -4841,14 +4693,9 @@ entre la muchedumbre de los sectarios de su época. Su abnegacion le
 condujo á la gloria, dándole un puesto único en el panteon religioso
 de la humanidad.
 
-
-
-
 * CAPÍTULO XIII
 
 ** PRIMERAS TENTATIVAS SOBRE JERUSALEN
-
-
 Jesús, casi todos los años iba á Jerusalen á la fiesta de la Pascua.
 Los pormenores de cada uno de aquellos viajes son poco conocidos,
 porque los sinópticos no hablan de ellos[530], y las notas del cuarto
@@ -5160,14 +5007,9 @@ religion de la humanidad, establecida, no sobre la sangre, sino sobre
 el corazon, queda fundada. Se ha ido más allá que Moisés; el templo no
 tiene ya razon de ser, y es irrevocablemente condenado.
 
-
-
-
 * CAPÍTULO XIV
 
 ** RELACIONES DE JESÚS CON LOS GENTILES Y LOS SAMARITANOS
-
-
 Consecuente á estos principios, Jesús despreciaba todo lo que no era
 la religion del corazon. Las vanas prácticas de los devotos[575] y el
 rigorismo exterior, que espera alcanzar la salvacion por medio de
@@ -5355,15 +5197,10 @@ permanente, y despues de haber recorrido todos los círculos de los
 errores, la humanidad volverá á esa palabra, como á la expresion
 inmortal de su fe y de sus esperanzas.
 
-
-
-
 * CAPÍTULO XV
 
 PRINCIPIO DE LA LEYENDA DE JESÚS -- IDEA QUE TIENE ÉL MISMO DE SU
 MISION SOBRENATURAL
-
-
 Cuando Jesús volvió á Galilea, no conservaba en su corazon ni un átomo
 de fe judía, y entónces se le ve lleno de entusiasmo revolucionario,
 expresando sus ideas con perfecta claridad. Los inocentes aforismos de
@@ -5662,14 +5499,9 @@ ello un culpable, es sin duda la humanidad, que quiere ser engañada.
    _NPIE_  Vaso sagrado, en el cual se conservaba el óleo que servia para
   ungir á los reyes. (N. del T.)
 
-
-
-
 * CAPÍTULO XVI
 
 ** MILAGROS
-
-
 Segun los contemporáneos de Jesús, dos medios de prueba podian
 solamente establecer una mision sobrenatural: tales eran los milagros
 y el cumplimiento de las profecías. Jesús, y en particular sus
@@ -5934,14 +5766,9 @@ reino consistia en el círculo de niños que una frescura de imaginacion
 semejante á la suya y un mismo sentimiento del cielo agrupaban y
 retenian á su alrededor.
 
-
-
-
 * CAPÍTULO XVII
 
 ** FORMA DEFINITIVA DE LAS IDEAS DE JESÚS SOBRE EL REINO DE DIOS
-
-
 Suponemos que esa última fase de la actividad de Jesús duró
 aproximadamente diez y ocho meses, desde su vuelta de la peregrinacion
 de la Pascua del año 31, hasta su viaje á la fiesta de los
@@ -6282,8 +6109,6 @@ abrazando á la vez diferentes órdenes de verdades.
 * CAPÍTULO XVIII
 
 ** INSTITUCIONES DE JESÚS
-
-
 Lo que prueba, además, que esas ideas apocalípticas no absorbieron
 nunca por completo á Jesús es que, al mismo tiempo en que más se
 preocupaba de ellas, establecia con extraordinaria seguridad de miras
@@ -6572,14 +6397,9 @@ sentido propio y el metafórico, esas costumbres de estilo cuyo
 carácter esencial consiste en prestar á la metáfora, ó mejor dicho, á
 la idea, una forma palpable y de exuberante realidad.
 
-
-
-
 * CAPÍTULO XIX
 
 ** PROGRESION CRECIENTE DE ENTUSIASMO Y DE EXALTACION
-
-
 Es evidente que semejante sociedad religiosa, fundada sólo en la
 esperanza del reino de Dios, debia ser muy incompleta por sí misma. La
 primera generacion cristiana vivió toda ella de expectacion y de
@@ -6820,14 +6640,9 @@ que viniera á sustraerle á las imposibilidades de un camino sin
 término, á libertarle de una prueba demasiado prolongada, á
 introducirle impecable y para siempre en su celestial serenidad.
 
-
-
-
 * CAPÍTULO XX
 
 ** OPOSICION CONTRA JESÚS
-
-
 Jesús no encontró, á lo que parece, gran oposicion durante el primer
 período de su carrera. Gracias á la extremada libertad de que se
 gozaba en Galilea y al infinito número de maestros que aparecian en
@@ -7109,14 +6924,9 @@ accion tendria que ser necesariamente muy limitada. La Judea era para
 que se empeñó en justificar el proverbio de «ningun profeta debe morir
 fuera de Jerusalen»[873].
 
-
-
-
 * CAPÍTULO XXI
 
 ** ÚLTIMO VIAJE DE JESÚS Á JERUSALEN
-
-
 Hacia ya mucho tiempo que Jesús tenía conciencia de los peligros que
 le rodeaban[874]. Durante un período que puede calcularse de diez y
 ocho meses evitó ir en peregrinacion á Jerusalen[875]. Por la fiesta
@@ -7462,14 +7272,9 @@ por último, tomaban acta de todas sus palabras, á fin de invocar
 contra él las leyes de una teocracia intolerante, no abrogadas aún por
 la dominacion romana[932].
 
-
-
-
 * CAPÍTULO XXII
 
 ** MAQUINACIONES DE LOS ENEMIGOS DE JESÚS
-
-
 Jesús pasó el otoño y una parte del invierno en Jerusalen, en donde
 esa estacion es bastante fria. El pórtico de Salomon, con sus
 corredores cubiertos, era el sitio en que se paseaba de
@@ -7719,14 +7524,9 @@ Jerusalen[968]. La solemnidad de la Pascua se acercaba, y se presumia
 que Jesús, segun su costumbre, iria á la capital á celebrar aquella
 fiesta.
 
-
-
-
 * CAPÍTULO XXIII
 
 ** ÚLTIMA SEMANA DE JESÚS
-
-
 Y en efecto, partió con sus discípulos para ver por última vez la
 ciudad incrédula y rebelde. Las esperanzas de las personas que le
 rodeaban habian llegado al último grado de exaltacion: al subir esta
@@ -8111,12 +7911,9 @@ probablemente se remonta hasta el mismo Pedro, le emplazó para el
 canto del gallo[1023]. Todos, á imitacion de Cephas, juraron que no le
 abandonarian.
 
-
 * CAPÍTULO XXIV
 
 ** ARRESTO Y CAUSA DE JESÚS
-
-
 La noche habia cerrado ya completamente[1024] cuando salieron de la
 sala[1025]. Segun su costumbre, Jesús atravesó el valle del Cedron, y
 acompañado de sus discípulos se dirigió al huerto de Gethsemaní,
@@ -8534,13 +8331,9 @@ gratitud del género humano.
    _NPIE_  No hace mucho tiempo que fueron condenados á presidio, por la
   administracion O’Donnell, algunos propagandistas protestantes de
   Granada. (N. del T.)
-
-
 * CAPÍTULO XXV
 
 ** MUERTE DE JESÚS
-
-
 Aunque el verdadero motivo de la muerte de Jesús fué completamente
 religioso, sus enemigos habian conseguido presentarle en el pretorio
 como culpable de crímen de Estado; de otro modo, esto es, por crímen
@@ -8740,14 +8533,9 @@ tú ya no habrá distincion ninguna. ¡Toma, pues, posesion de tu reino,
 sublime vencedor de la muerte, de ese reino adonde te seguirán, por la
 ancha via que trazaste, siglos de adoradores!
 
-
-
-
 * CAPÍTULO XXVI
 
 ** JESÚS EN EL SEPULCRO
-
-
 Con arreglo á nuestra manera de contar[1122], eran las tres de la
 tarde poco más ó ménos cuando Jesús espiró. Una ley judáica[1123]
 prohibia que los cadáveres de los ajusticiados quedasen suspendidos al
@@ -8871,14 +8659,9 @@ imaginacion de María de Magdala[1144] desempeñó un papel de primer
 órden[1145]. ¡Poder divino del amor! ¡Sagrados momentos aquellos en
 que la pasion de una alucinada dió al mundo un Dios resucitado!
 
-
-
-
 * CAPÍTULO XXVII
 
 ** SUERTE DE LOS ENEMIGOS DE JESÚS
-
-
 La muerte de Jesús acaeció en el año 33 de nuestra era, segun el
 cálculo que hemos adoptado[1146]. De todos modos, no pudo tener lugar
 ántes del año 29, en razon á que la predicacion de Juan y de Jesús
@@ -8990,14 +8773,9 @@ reponerse de él completamente. ¿Cómo adoptar un tono infalible
 respecto á los subordinados, cuando se tiene sobre la conciencia el
 enorme error de Gethsemaní?[1158].
 
-
-
-
 * CAPÍTULO XXVIII
 
 ** CARÁCTER ESENCIAL DE LA OBRA DE JESÚS
-
-
 Como se ve, la accion de Jesús no salió nunca del círculo judío.
 Aunque sus simpatías por todos aquellos que la ortodoxia despreciaba
 le impulsase á admitir á los paganos en el reino de Dios, y no
@@ -9363,11 +9141,7 @@ incesantemente; su leyenda provocará lágrimas sin cuento; su martirio
 enternecerá los mejores corazones, y todos los siglos proclamarán que
 entre los hijos de los hombres no ha nacido ninguno que pueda
 comparársele.
-
-
 _Fin De La Vida De Jesús_
-
-
 * NOTAS
 
 ** NOTAS DE LA INTRODUCCION
@@ -9577,7 +9351,6 @@ sino despues del sitio del año 70.
 [66] _Gazette des Tribunaux_, 10 de Set. y 11 de Noviembre de 1851, 28
 de Mayo de 1857.
 
-
 ** NOTAS DEL CAPÍTULO I
 
 [67] Esta palabra indica sencillamente los pueblos que hablan ó han
@@ -9626,7 +9399,6 @@ al Oriente. Ver á Servius sobre este verso, y _Carmina sibyllina_,
 III, 97-817. Tác., _Hist._, V, 13.
 
 [79] Luc., II, 25 y sig.
-
 
 ** NOTAS DEL CAPÍTULO II
 
@@ -9752,7 +9524,6 @@ jerarquía paralela á la de los apóstoles. (Véase _I Cor._, IX, 5.)
 Galilea tenía más de cinco mil habitantes. Probablemente hay
 exageracion.
 
-
 ** NOTAS DEL CAPÍTULO III
 
 [102] Juan, VIII, 6.
@@ -9840,7 +9611,6 @@ Evangelio segun los Hebreos, en San Jerónimo, _Dial. adv. Pelag._,
 III, 2.
 
 [126] Luc., XI, 27 y sig.
-
 
 ** NOTAS DEL CAPÍTULO IV
 
@@ -10010,7 +9780,6 @@ el viaje. Pero la etapa entre Sichem y Jerusalen se dividia casi
 siempre en dos.
 
 [181] Luc., IV, 42; V, 16.
-
 
 ** NOTAS DEL CAPÍTULO V
 
@@ -10203,7 +9972,6 @@ _Erachin_, 16 _b_.
 [245] El Talmud, resúmen de aquel gran movimiento de escuelas, no se
 empezó á escribir sino en el siglo segundo de nuestra era.
 
-
 ** NOTAS DEL CAPÍTULO VI
 
 [246] Luc., I, 5; pasaje del evangelio de los Ebionim, conservado por
@@ -10393,7 +10161,6 @@ visitado desde Seetzen.
 
 [305] Marc., VI, 20. Yo leo ἠπόρει, y no ἐποίει.
 
-
 ** NOTAS DEL CAPÍTULO VII
 
 [306] Tobías, VIII, 3; Luc., XI, 24.
@@ -10475,7 +10242,6 @@ sig.; Marc., X, 14-15, 23-25; Luc., IV, 18 y sig.; VI, 20; XVIII,
 discurso verdadero pronunciado por Jesús, al ménos un sentimiento
 profundamente arraigado en sus discípulos, que sin duda procedia de
 Jesús.
-
 
 ** NOTAS DEL CAPÍTULO VIII
 
@@ -10627,8 +10393,6 @@ de Tudela, p. 46, ed. Asher.
 [373] Los vestigios de la rica civilizacion pagana de aquel tiempo
 cubren aún todo el Beled-Bescharrah, y particularmente las montañas
 que forman el cabo Blanco y el cabo Nakoura.
-
-
 ** NOTAS DEL CAPÍTULO IX
 
 [374] Math., IV, 18; Luc., V, 44 y sig.; Juan, I, 44; XXI, 1 y sig.;
@@ -10791,7 +10555,6 @@ Talm. de Babil., _Sanhedrin_, 25 _b_.
 
 [430] Math., IV, 11; Marc., I, 13.
 
-
 ** NOTAS DEL CAPÍTULO X
 
 [431] Math., XIV, 26; Marc., VI, 49; Luc., XXIV, 39; Juan, VI, 19.
@@ -10857,7 +10620,6 @@ maroma (κάμιλος).
 [454] Math., XIII, 22.
 
 [455] Salm. CXXXII, 3.
-
 
 ** NOTAS DEL CAPÍTULO XI
 
@@ -10983,7 +10745,6 @@ Esta costumbre existe todavía entre los Israelitas.
 [499] Luc., XXIII, 43; _II Cor._, XII, 4. Comp. _Carm. Sibyll._,
 prœm., 76; Talm. de Babil., _Chagiga_, 14 _b_.
 
-
 ** NOTAS DEL CAPÍTULO XII
 
 [500] Math., XI, 2 y sig.; Luc., VII, 18 y sig.
@@ -11058,7 +10819,6 @@ en esos textos parecen muy anteriores á la época de su redaccion.
 
 [529] La palabra _Sabiens_ es el equivalente arameo de la palabra
 «Bautistas.» _Mogtasila_ tiene en árabe el mismo significado.
-
 
 ** NOTAS DEL CAPÍTULO XIII
 
@@ -11207,7 +10967,6 @@ Antiguo Testamento se cumplieron en Jesús.--Luc., XVI, 17.
 [574] Math., XXIV, 14; XXVIII, 19; Marc., XIII, 10; XVI, 15; Luc.,
 XXIV, 47.
 
-
 ** NOTAS DEL CAPÍTULO XIV
 
 [575] Math., XV, 9.
@@ -11318,7 +11077,6 @@ su interlocutora pudieron relatarla. Pero la anécdota del cap. IV de
 Juan representa ciertamente uno de los pensamientos más íntimos de
 Jesús, y muchas circunstancias de la narracion tienen un carácter
 peculiar de verdad.
-
 
 ** NOTAS DEL CAPÍTULO XV
 
@@ -11512,7 +11270,6 @@ VII, 1 y sig.
 [670] Math., XIV, 2; XVI, 14; XVII, 3 y sig.; Marc., VI, 14-15; VIII,
 28; Luc., IX, 8 y sig., 19.
 
-
 ** NOTAS DEL CAPÍTULO XVI
 
 [671] Math., I, 22; II, 5-6, 15, 18; IV, 15.
@@ -11609,7 +11366,6 @@ infancia_, en Thilo, _Cod. apocr. N. T._, p. CX, nota.
 [705] Math., VIII, 34; Marc., V, 17; VIII, 37.
 
 [706] Juan, VI, 14-15.
-
 
 ** NOTAS DEL CAPÍTULO XVII
 
@@ -11755,7 +11511,6 @@ la noche del mundo...».
 
 [754] _I Cor._, XV, 52.
 
-
 ** NOTAS DEL CAPÍTULO XVIII
 
 [755] _Hech._, I, 15; _I Cor._, XV, 5; _Gal._, I, 10.
@@ -11887,7 +11642,6 @@ oficio del pescado en las comidas evangélicas.
 
 [805] Cánon de las misas griegas y de la misa latina (muy antiguo).
 
-
 ** NOTAS DEL CAPÍTULO XIX
 
 [806] Luc., XIV, 33; _Hech._, IV, 32 y sig.; V, 1-11.
@@ -11965,7 +11719,6 @@ Lúcas.
 [838] Rasgo muy marcado de Márcos, IV, 40; V, 15; IX, 31; X, 32.
 
 [839] Marc., XI, 12-14, 20 y sig.
-
 
 ** NOTAS DEL CAPÍTULO XX
 
@@ -12048,7 +11801,6 @@ XI, 38 y sig.
 [872] Marc., III, 6.
 
 [873] Luc., XIII, 33.
-
 
 ** NOTAS DEL CAPÍTULO XXI
 
@@ -12222,7 +11974,6 @@ XI, 25.
 
 [932] Luc., XI, 53-54.
 
-
 ** NOTAS DEL CAPÍTULO XXII
 
 [933] Juan, X, 23.
@@ -12307,7 +12058,6 @@ Eus. y San Jerón., _De situ et nom. loc. hebr._, en las voces Ἐφρών y
 [968] Juan, XI, 55-56. Para el órden de los hechos, en toda esta parte
 seguimos el sistema de Juan. Los sinópticos parecen muy poco
 instruidos sobre el período de la vida de Jesús anterior á la Pasion.
-
 
 ** NOTAS DEL CAPÍTULO XXIII
 
@@ -12463,7 +12213,6 @@ Juan. Esa expresion no parece haber sido familiar á Jesús.
 
 [1023] Math., XXVI, 31 y sig.; Marc., XIV, 29 y sig.; Luc., XXII, 33 y
 sig.; Juan, XIII, 36 y sig.
-
 
 ** NOTAS DEL CAPÍTULO XXIV
 
@@ -12634,7 +12383,6 @@ Filon, _Leg. ad Caium_, § 38.
 [1083] Juan, XIX, 7.
 
 [1084] _Deuter._, XIII, 1 y sig.
-
 
 ** NOTAS DEL CAPÍTULO XXV
 
@@ -12808,7 +12556,6 @@ series_, 140; texto árabe publicado en Kosegarten, _op. cit._, p. 63.
 [1121] Math., XXVII, 50; Marc., XV, 37; Luc., XXIII, 46; Juan, XIX,
 30.
 
-
 ** NOTAS DEL CAPÍTULO XXVI
 
 [1122] Math., XXVII, 46; Marc., XV, 37; Luc., XXIII, 44. Comp. Juan,
@@ -12892,7 +12639,6 @@ de apoyo á muchos manuscritos. En el cuarto evangelio (XX, 1-2, 11,
 18), María de Magdala es tambien el único testigo primitivo de la
 resurreccion.
 
-
 ** NOTAS DEL CAPÍTULO XXVII
 
 [1146] El año 33 corresponde exactamente á uno de los datos del
@@ -12939,7 +12685,6 @@ niño. El gendarme se consideraba allí como en otras partes el judío,
 esto es, con una especie de repulsion piadosa, por cuanto á que él fué
 quien prendió á Jesús.
 
-
 ** NOTAS DEL CAPÍTULO XXVIII
 
 [1159] Math., VIII, 5 y sig.; Luc., VII, 1 y sig.; Juan, XII, 20 y
@@ -12963,6 +12708,4 @@ por los enemigos del cristianismo.
 
 [1165] Filóstrato, _Vida de Apolonio_, IV, 2; VII, 11; VIII, 7.
 Eunapio, _Vida de los Sofistas_, p. 454, 500 (ed. Didot).
-
-
 _Fin De Las Notas De La Vida De Jesús._
