@@ -3,81 +3,109 @@
 #import themes.simple: *
 //#show: simple-theme.with(aspect-ratio: "16-9")
 
-
-#set heading(numbering: "1.1")
-#show heading: set text(purple)
-#show heading: set text(font: "Inria Serif")
-//#show heading: set align(center)
-#show heading: it => block[
-    #underline([#emph(it.body) #counter(heading).display()])
-]
-#show heading: set block(above: 1.4em, below: 1em)
-#show math.equation: set text(weight: "regular")
+#set page(
+  paper: "a4",
+  margin: (top: 2.54cm, bottom: 2.54cm, left: 2.54cm, right: 2.54cm),
+  header: align(right)[
+    #set text(8pt, fill: luma(120))
+    // Opcional: cabecera personalizada
+  ],
+  footer: context {
+    let page_number = counter(page).get().first()
+    let total_pages = counter(page).final().first()
+    align(center)[#text(9pt)[#page_number]]
+  }
+)
 
 #set text(
-    font: "New Computer Modern",
-    fill: black,
-    lang: "es",
-    size: 10pt,
-    hyphenate: auto,
+  font: "New Computer Modern",
+  size: 11pt,
+  lang: "es"
 )
 
-#show raw: set text(font: "New Computer Modern Mono")
-
-#set par(leading: 0.55em, spacing: 0.55em, first-line-indent: 1.8em, justify: true)
-
-#set page(
-    fill: gray.lighten(80%),
-    paper: "a4",
-    //flipped: true,
-    margin: 1.75in,
-    //header: align(center)[#smallcaps[the header]],
-    header: context {
-        let num = here().page()
-        let color-titulo = if calc.even(num) { red } else { blue }
-
-        // 1. Buscar el encabezado de nivel 1 más cercano (anterior o actual)
-        // let capitulo-actual = query(
-        //     selector(heading.where(level: 1)).before(here())
-        // )
-        //
-        // // 2. Extraer el texto si existe
-        // let texto-titulo = if capitulo-actual.len() > 0 {
-        //     capitulo-actual.last().body
-        // } else {
-        //     [] // Si no hay ningún capítulo aún
-        // }
-        //
-        // align(right)[
-        //     #text(fill: color-titulo, weight: "bold")[#texto-titulo]
-        // ]
-
-        if calc.even(num) {
-            // Páginas pares: Título general a la izquierda (rojo)
-            align(left)[#text(fill: red, weight: "bold")[Typst: step
-            by step]]
-        } else {
-            // Páginas impares: Título del Capítulo I, II, etc. a la derecha (azul)
-            let caps = query(selector(heading.where(level: 1)).before(here()))
-            let titulo-cap = if caps.len() > 0 { caps.last().body } else { [] }
-
-            align(right)[#text(fill: blue, weight: "bold")[#titulo-cap]]
-        }
-    },
-    footer: context {
-        let num = here().page()
-        // 1. Página actual y Total
-        let actual = counter(page).get().first()
-        let total = counter(page).final().first()
-        let color-titulo = if calc.even(num) { red } else { blue }
-
-        align(center)[
-            #text(fill: color-titulo, weight: "bold")[Página: #num de #total]
-        ]
-    },
-    //numbering: "1 de 1",
-    //number-align: right,
+#set par(
+  justify: true,
+  leading: 0.65em,
+  first-line-indent: 1.5em
 )
+
+#show heading: set text(weight: "bold")
+#show heading.where(level: 1): it => block(above: 1.5em, below: 1em, it)
+
+// #set heading(numbering: "1.1")
+// #show heading: set text(purple)
+// #show heading: set text(font: "Inria Serif")
+// //#show heading: set align(center)
+// #show heading: it => block[
+//     #underline([#emph(it.body) #counter(heading).display()])
+// ]
+// #show heading: set block(above: 1.4em, below: 1em)
+// #show math.equation: set text(weight: "regular")
+//
+// #set text(
+//     font: "New Computer Modern",
+//     fill: black,
+//     lang: "es",
+//     size: 10pt,
+//     hyphenate: auto,
+// )
+//
+// #show raw: set text(font: "New Computer Modern Mono")
+//
+// #set par(leading: 0.55em, spacing: 0.55em, first-line-indent: 1.8em, justify: true)
+//
+// #set page(
+//     fill: gray.lighten(80%),
+//     paper: "a4",
+//     //flipped: true,
+//     margin: 1.75in,
+//     //header: align(center)[#smallcaps[the header]],
+//     header: context {
+//         let num = here().page()
+//         let color-titulo = if calc.even(num) { red } else { blue }
+//
+//         // 1. Buscar el encabezado de nivel 1 más cercano (anterior o actual)
+//         // let capitulo-actual = query(
+//         //     selector(heading.where(level: 1)).before(here())
+//         // )
+//         //
+//         // // 2. Extraer el texto si existe
+//         // let texto-titulo = if capitulo-actual.len() > 0 {
+//         //     capitulo-actual.last().body
+//         // } else {
+//         //     [] // Si no hay ningún capítulo aún
+//         // }
+//         //
+//         // align(right)[
+//         //     #text(fill: color-titulo, weight: "bold")[#texto-titulo]
+//         // ]
+//
+//         if calc.even(num) {
+//             // Páginas pares: Título general a la izquierda (rojo)
+//             align(left)[#text(fill: red, weight: "bold")[Typst: step
+//             by step]]
+//         } else {
+//             // Páginas impares: Título del Capítulo I, II, etc. a la derecha (azul)
+//             let caps = query(selector(heading.where(level: 1)).before(here()))
+//             let titulo-cap = if caps.len() > 0 { caps.last().body } else { [] }
+//
+//             align(right)[#text(fill: blue, weight: "bold")[#titulo-cap]]
+//         }
+//     },
+//     footer: context {
+//         let num = here().page()
+//         // 1. Página actual y Total
+//         let actual = counter(page).get().first()
+//         let total = counter(page).final().first()
+//         let color-titulo = if calc.even(num) { red } else { blue }
+//
+//         align(center)[
+//             #text(fill: color-titulo, weight: "bold")[Página: #num de #total]
+//         ]
+//     },
+//     //numbering: "1 de 1",
+//     //number-align: right,
+// )
 
 // ┌──────────┐
 // │ Document │------------------------------------------------------------
@@ -86,20 +114,20 @@
 // ┌────────────┐
 // │ Title page │
 // └────────────┘
-#page(header: none, footer: none)[
-    #align(center + horizon)[
-        #title("Typst: step by step")
-        #v(1em)
-        #text(size: 1.2em)[Easy peasy]
-    ]
-]
-#pagebreak(weak: true)
-
-// ┌────────┐
-// │ Indice │
-// └────────┘
-#outline(depth: 2)
-#pagebreak(weak: true)
+// #page(header: none, footer: none)[
+//     #align(center + horizon)[
+//         #title("Typst: step by step")
+//         #v(1em)
+//         #text(size: 1.2em)[Easy peasy]
+//     ]
+// ]
+// #pagebreak(weak: true)
+//
+// // ┌────────┐
+// // │ Indice │
+// // └────────┘
+// #outline(depth: 2)
+// #pagebreak(weak: true)
 
 // ┌──────────┐
 // │ Contents │
