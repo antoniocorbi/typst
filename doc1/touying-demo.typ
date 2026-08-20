@@ -13,6 +13,13 @@
 
 = Primera Sección
 
+#grid(columns: 2,
+    rect(width: 100%, height: 30%, fill: red),
+    rect(width: 100%, height: 30%, fill: green),
+    rect(width: 100%, height: 30%, fill: blue),
+    rect(width: 100%, height: 30%,  fill: yellow)
+)
+
 == Diapositiva de Introducción
 
 Esta es una diapositiva sencilla escrita en Typst.
