@@ -114,20 +114,20 @@
 // ┌────────────┐
 // │ Title page │
 // └────────────┘
-// #page(header: none, footer: none)[
-//     #align(center + horizon)[
-//         #title("Typst: step by step")
-//         #v(1em)
-//         #text(size: 1.2em)[Easy peasy]
-//     ]
-// ]
-// #pagebreak(weak: true)
-//
-// // ┌────────┐
-// // │ Indice │
-// // └────────┘
-// #outline(depth: 2)
-// #pagebreak(weak: true)
+#page(header: none, footer: none)[
+    #align(center + horizon)[
+        #title("Typst: step by step")
+        #v(1em)
+        #text(size: 1.2em)[Easy peasy]
+    ]
+]
+#pagebreak(weak: true)
+
+// ┌────────┐
+// │ Indice │
+// └────────┘
+#outline(depth: 2)
+#pagebreak(weak: true)
 
 // ┌──────────┐
 // │ Contents │
